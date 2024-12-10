@@ -2,46 +2,46 @@
 <div id="main-container">
     <h1 id="title">Wyniki</h1>
 
-    <div class="row">
+    <div class="row appearIn">
         <p class="result-name">Płeć:</p>
         <p class="result">{{ formData.pickedGender }}</p>
         <div class="bar" style="background: transparent;"></div>
     </div>
 
-    <div class="row">
+    <div class="row appearIn">
         <p class="result-name">Cholesterol całkowity:</p>
         <p v-if="formData.selected == 'mmol/l' " class="result">{{ parseFloat((formData.cholesterol / 38.64).toFixed(3)) }} {{ formData.selected }}</p>
         <p v-else class="result">{{ parseFloat((formData.cholesterol).toFixed(3)) }} {{ formData.selected }}</p>
     </div>
-    <div class="bar">
-        <div class="ball" :style="{ marginLeft: calculatePercentage('cholesterol') + '%' }"></div>
+    <div class="bar appearIn appearIn">
+        <div class="ball slideIn" :style="{ marginLeft: calculatePercentage('cholesterol') + '%' }"></div>
     </div>
 
-    <div class="row">
+    <div class="row appearIn">
         <p class="result-name">LDL:</p>
         <p v-if="formData.selected == 'mmol/l'" class="result">{{ parseFloat((formData.ldl / 38.64).toFixed(3))  }} {{ formData.selected }}</p>
         <p v-else class="result">{{ parseFloat((formData.ldl).toFixed(3)) }} {{ formData.selected }}</p>
     </div>
-    <div class="bar">
-        <div class="ball" :style="{ marginLeft: calculatePercentage('ldl') + '%' }"></div>
+    <div class="bar appearIn">
+        <div class="ball slideIn" :style="{ marginLeft: calculatePercentage('ldl') + '%' }"></div>
     </div>
 
-    <div class="row">
+    <div class="row appearIn">
         <p class="result-name">HDL:</p>
         <p v-if="formData.selected == 'mmol/l'" class="result">{{ parseFloat((formData.hdl / 38.64).toFixed(3))  }} {{ formData.selected }}</p>
         <p v-else class="result">{{ parseFloat((formData.hdl).toFixed(3)) }} {{ formData.selected }}</p>
     </div>
-    <div class="bar" style="    background: linear-gradient(90deg, orange, red, #40a832, #40a832, #40a832);">
-        <div class="ball" :style="{ marginLeft: calculatePercentage('hdl') + '%' }"></div>
+    <div class="bar appearIn" style="    background: linear-gradient(90deg, orange, red, #40a832, #40a832, #40a832);">
+        <div class="ball slideIn" :style="{ marginLeft: calculatePercentage('hdl') + '%' }"></div>
     </div>
     
-    <div class="row">
+    <div class="row appearIn">
         <p class="result-name">Trójglicerydy:</p>
         <p v-if="formData.selected == 'mmol/l'" class="result">{{ parseFloat((formData.triglycerides / 88.62).toFixed(3))  }} {{ formData.selected }}</p>
         <p v-else class="result">{{ parseFloat((formData.triglycerides).toFixed(3)) }} {{ formData.selected }}</p>
     </div>
-    <div class="bar">
-        <div class="ball" :style="{ marginLeft: calculatePercentage('triglycerides') + '%' }"></div>
+    <div class="bar appearIn">
+        <div class="ball slideIn" :style="{ marginLeft: calculatePercentage('triglycerides') + '%' }"></div>
     </div>
 
     <select v-model="selected" @change="updateUnit" id="unit">
@@ -49,11 +49,9 @@
         <option value="mg/dl">mg/dl</option>
         <option value="mmol/l">mmol/l</option>
     </select>
-
-    <button id="go-back-button" @click="goBack">Wróć</button>
 </div>
 
-<div id="all-norms">
+<div id="all-norms" class="appearIn">
     <h1 id="title">Normy</h1>
 
     <div class="second-row">
@@ -173,14 +171,13 @@ export default {
         nextPage() {
             this.$router.push('/tabs/tab3');
         },
-        
-        goBack() {
-            this.$router.push('/tabs/tab1');
-        },
 
         setUnit() {
             this.selected = this.formData.selected;
         },
+    },
+    mounted() {
+        this.selected = this.formData.selected;
     },
     watch: {
         'formData.selected': 'setUnit',
@@ -189,12 +186,38 @@ export default {
 </script>
 
 <style scoped>
+/*-----animations-----*/
+@keyframes slideIn {
+    from{
+        margin-left: 0;
+    }
+}
+
+@keyframes appearIn {
+    from{
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+} 
+
+.slideIn {
+    animation: slideIn 3s ease-in-out forwards;
+}
+
+.appearIn {
+    animation: appearIn 2s ease-in-out forwards;
+}
+
+/*-----styles-----*/
+
 #main-container{
     background-color: transparent;
     width: 80%;
     height: 100%;
     margin: 0 auto;
-    margin-top: 50px;
+    margin-top: 30px;
     background-color: rgb(34, 34, 34);
     padding: 30px;
     border-radius: 20px;
@@ -206,6 +229,10 @@ export default {
 #title {
     text-align: center;
     font-size: 30px;
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
 }
 
 .row {
@@ -262,8 +289,8 @@ export default {
     width: 80%;
     height: auto;
     margin: 0 auto;
-    margin-top: 20px;
-    margin-bottom: 50px;
+    margin-top: 30px;
+    margin-bottom: 30px;
     background-color: rgb(34, 34, 34);
     padding: 30px;
     border-radius: 20px;
@@ -281,24 +308,6 @@ export default {
     height: 40px;
     border-radius: 20px;
     text-align: center;
-}
-
-#go-back-button {
-    position: absolute;
-    left: 10px;
-    top: 10px;
-    width: 100px;
-    height: 40px;
-    border-radius: 20px;
-    text-align: center;
-    box-shadow: 0 0 5px transparent;
-    transition: all 0.3s ease-in-out;
-}
-
-#go-back-button:hover {
-    box-shadow: 0 0 5px rgba(255, 165, 0, 0.7);
-    background-color: orange;
-    color: black;
 }
 
 #button-container {

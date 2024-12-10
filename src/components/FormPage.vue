@@ -3,16 +3,16 @@
     <div id="user-data-container">
         <div id="input-container">
             <label class="input-labels">Cholesterol całkowity</label>
-            <input class="inputs" v-model="cholesterol" type="number" required></input>
+            <input class="inputs appearIn" v-model="cholesterol" type="number" required></input>
 
             <label class="input-labels">LDL</label>
-            <input class="inputs" v-model="ldl" type="number" required></input>
+            <input class="inputs appearIn" v-model="ldl" type="number" required></input>
 
             <label class="input-labels">HDL</label>
-            <input class="inputs" v-model="hdl" type="number" required></input>
+            <input class="inputs appearIn" v-model="hdl" type="number" required></input>
 
             <label class="input-labels">Trójglicerydy</label>
-            <input class="inputs" v-model="triglycerides" type="number" required></input>
+            <input class="inputs appearIn" v-model="triglycerides" type="number" required></input>
         </div>
         <select v-model="selected" id="unit" required>
             <option disabled value="">Wybierz jednostkę</option>
@@ -91,10 +91,45 @@ export default {
 </script>
 
 <style scoped>
+/*-----animations-----*/
+
+@keyframes appearIn {
+    25%{
+        border: 1px solid orange;
+        box-shadow: 0 0 5px rgba(255, 165, 0, 0.7);
+    }
+    50% {
+        border: 1px solid gray;
+        box-shadow: 0 0 5px transparent;
+    }
+    75%{
+        border: 1px solid orange;
+        box-shadow: 0 0 5px rgba(255, 165, 0, 0.7);
+    }
+    100% {
+        border: 1px solid gray;
+        box-shadow: 0 0 5px transparent;
+    }
+} 
+
+@keyframes blink {
+    from{
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+} 
+
+.appearIn {
+    animation: appearIn 2s ease-in-out forwards;
+}
+
+/*-----styles-----*/
+
 #main {
     background-color: transparent;
     width: 80%;
-    height: 80%;
     margin: 0 auto;
     margin-top: 50px;
     background-color: rgb(34, 34, 34);
