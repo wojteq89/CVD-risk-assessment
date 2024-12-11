@@ -31,7 +31,7 @@
         <p v-if="formData.selected == 'mmol/l'" class="result">{{ parseFloat((formData.hdl / 38.64).toFixed(3))  }} {{ formData.selected }}</p>
         <p v-else class="result">{{ parseFloat((formData.hdl).toFixed(3)) }} {{ formData.selected }}</p>
     </div>
-    <div class="bar appearIn" style="    background: linear-gradient(90deg, orange, red, #40a832, #40a832, #40a832);">
+    <div class="bar appearIn" style="    background: linear-gradient(90deg, red,orange, #40a832, #40a832, #40a832);">
         <div class="ball slideIn" :style="{ marginLeft: calculatePercentage('hdl') + '%' }"></div>
     </div>
     
